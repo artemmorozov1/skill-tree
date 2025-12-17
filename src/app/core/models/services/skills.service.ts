@@ -193,6 +193,6 @@ export class SkillsService {
     if (!skill || !skill.parentId) return false;
     const parent = tree.skills.find((s) => s.id === skill.parentId);
 
-    return !!parent && parent.level < 1;
+    return !!parent && parent.level < parent.maxLevel;
   }
 }

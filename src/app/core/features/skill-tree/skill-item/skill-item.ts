@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { Skill } from '../../../models/interfaces/Models';
 
 @Component({
@@ -12,7 +12,9 @@ export class SkillItem {
   locked = input<boolean>();
   pressed = output<number>();
   
-  upgraded: boolean = this.skill()?.level === this.skill()?.maxLevel;
+  upgraded = computed(() => {
+    return this.skill()?.level === this.skill()?.maxLevel;
+  });
 
   clickHandler() {
     this.pressed.emit(this.skill()?.id!);
