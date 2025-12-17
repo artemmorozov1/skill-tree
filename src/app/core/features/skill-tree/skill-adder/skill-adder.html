@@ -1,0 +1,77 @@
+<div class="w-full flex justify-center pb-16">
+    <div class="flex items-center gap-3">
+      <input type="text" placeholder="Skill name" [formControl]="name"
+      class="
+        h-10
+        border
+        border-neutral-700
+        rounded-xl
+        w-64
+        px-3
+        py-2
+        bg-transparent
+        text-neutral-200
+        placeholder-neutral-500
+        outline-none
+        focus:border-neutral-400
+        transition-colors
+      ">
+
+      <div class="relative inline-block text-sm select-none w-40">
+        <button
+        (click)="handleToggle()"
+        class="
+        flex justify-between
+        h-10 w-full
+        border border-neutral-700 rounded-xl
+        bg-transparent
+        px-3 py-2
+        hover:border-neutral-500
+        text-sm text-neutral-200
+        ">
+          <span class="capitalize">{{ selected() }}</span>
+          
+          <span class="material-symbols-outlined text-neutral-500 text-base">
+            expand_more
+          </span>
+        </button>
+
+        @if (isOpen()) {
+          <div class="
+           absolute left-0 bottom-full mb-2 w-full
+           bg-transparent border border-neutral-700 rounded-xl
+           z-20 overflow-hidden
+          "> 
+          
+          @for (opt of iconOptions; track opt) {
+            <button
+            (click)="handleChoose(opt)"
+            class="w-full text-left px-3 py-2 text-sm
+            hover:bg-neutral-800
+            text-neutral-200
+            capitalize
+            ">
+              {{opt}}
+            </button>
+          }
+
+          </div>
+        }
+      </div>
+
+
+
+      <button type="submit" (click)="handleAdd()"
+        class="
+          h-10
+          border
+          border-neutral-700
+          rounded-xl
+          w-16
+          hover:border-neutral-500
+          text-sm text-neutral-200
+      ">
+          Add
+      </button>
+    </div>
+</div>

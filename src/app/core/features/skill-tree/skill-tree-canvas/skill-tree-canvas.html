@@ -1,0 +1,58 @@
+<div class="w-full h-full overflow-hidden relative bg-neutral-900"
+     (wheel)="onWheel($event)"
+     (mousedown)="onMouseDown($event)"
+     (mouseup)="onMouseUp()"
+     (mouseleave)="onMouseUp()"
+     (mousemove)="onMouseMove($event)">
+
+  <div class="absolute left-1/2 top-1/2 world "
+       [style.transform]="
+         'translate(' + offsetX() + 'px,' + offsetY() + 'px) ' +
+         'scale(' + zoom() + ')'
+       ">
+
+      <svg class="absolute inset-0 pointer-events-none">
+        @for (skill of skills(); track skill.id) {
+          @if (skill.parentId !== null) {
+            @let parent = getParent(skill.parentId);
+            <line
+            [attr.x1]="parent?.x" [attr.y1]="parent?.y"
+            [attr.x2]="skill.x" [attr.y2]="skill.y"
+            stroke="#555" stroke-width="2"
+            />
+          }
+        }
+      </svg>
+
+      @for (slot of slots(); track slot.index + ':' + slot.parentId) {
+        <button class="absolute w-6 h-6 rounded-full bg-neutral-700 text-sm text-neutral-300 flex justify-center"
+        [style.left.px]="slot.x - 12"
+        [style.top.px]="slot.y - 12"
+        (click)="openSlot(slot)"
+        >+
+        </button>
+      }
+
+      @if (selectedSlot) {
+        <div class="absolute"
+          [style.left.px]="selectedSlot.x - 265"
+          [style.top.px]="selectedSlot.y + 50">
+            <app-skill-adder
+              [parentId]="selectedSlot.parentId"
+              [slot]="selectedSlot"
+              (closed)="selectedSlot = null"
+            />
+        </div>
+      }
+        
+      @for (skill of skills(); track skill.id) {
+        <app-skill-item
+        [skill]="skill"
+        [locked]="skillsService.isLocked(skill.id)"
+        class="absolute"
+        [style.left.px]="skill.x"
+        [style.top.px]="skill.y"
+        (pressed)="onSkillPressed($event)"></app-skill-item>
+      }
+  </div>
+</div>
