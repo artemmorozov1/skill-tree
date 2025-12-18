@@ -5,6 +5,10 @@
      (mouseleave)="onMouseUp()"
      (mousemove)="onMouseMove($event)">
 
+  <app-tree-adder
+    class="absolute top-4 left-4 z-10">
+  </app-tree-adder>
+
   <div class="absolute left-1/2 top-1/2 world "
        [style.transform]="
          'translate(' + offsetX() + 'px,' + offsetY() + 'px) ' +

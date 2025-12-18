@@ -21,8 +21,6 @@ export class SkillAdder {
   readonly slot = input<Slot>();
   readonly closed = output<void>();
 
-  // потом переделаю выбор иконок, сейчас он странный..
-  // для каждой иконки (по сути это тип скилла) отдельное направление в древе навыков
   iconOptions: SkillIcon[] = ['code', 'chess', 'psychology', 'exercise']; 
 
   selected = signal(this.iconOptions[0]);
