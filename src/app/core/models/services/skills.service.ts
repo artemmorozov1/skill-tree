@@ -19,7 +19,7 @@ export class SkillsService {
     const defaultTree: SkillTree = {
       id: this.genId(),
       name: 'My tree',
-      skills: [root],
+      skills: [],
     };
 
     this.trees.set([defaultTree]);
@@ -58,6 +58,18 @@ export class SkillsService {
     const tree = this.activeTree();
     if (!tree) return [];
     const slots: Slot[] = [];
+
+    if (tree.skills.length === 0) {
+      slots.push(
+        {
+          parentId: null,
+          x: 0,
+          y: 0,
+          index: 0,
+        }
+      );
+      return slots;
+    }
 
     tree.skills.forEach((skill) => {
       if (skill.childrenIds.length === 0) {
@@ -112,7 +124,7 @@ export class SkillsService {
     const tree: SkillTree = {
       id: this.genId(),
       name: name || 'New tree',
-      skills: [root],
+      skills: [],
     };
 
     this.trees.update((ts) => [...ts, tree]);
@@ -133,15 +145,18 @@ export class SkillsService {
   }
 
   addSkill(
-    parentId: number, slot: { x: number, y : number },
+    parentId: number | null, slot: { x: number, y : number },
     payload: { name: string, description: string, icon: SkillIcon }
   ) {
     if (!payload.name) return;
     const tree = this.activeTree();
     if (!tree) return;
 
-    const parent = tree.skills.find((s) => s.id === parentId);
-    if (!parent) return;
+
+    if (parentId !== null) {
+      const parent = tree.skills.find((s) => s.id === parentId);
+      if (!parent) return;
+    }
 
     const child: Skill = {
       id: this.genId(),

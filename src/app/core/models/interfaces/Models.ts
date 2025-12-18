@@ -21,7 +21,7 @@ export interface SkillTree {
 }
 
 export interface Slot {
-  parentId: number;
+  parentId: number | null;
   x: number;
   y: number;
   index: number;

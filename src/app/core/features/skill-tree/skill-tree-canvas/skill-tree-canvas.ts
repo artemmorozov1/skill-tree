@@ -39,8 +39,37 @@ export class SkillTreeCanvas {
     this.skillsService.upgradeSkill(id);
   }
 
-  zoom = signal(1);        // масштаб
-  offsetX = signal(0);     // смещение
+  private readonly NODE_SIZE = 64;       // w-16/h-16
+  private readonly NODE_TOP_OFFSET = 20; // mt-5
+  private readonly NODE_RADIUS = this.NODE_SIZE / 2;
+
+  nodeCenter(skill: Skill) {
+    return {
+      x: skill.x + this.NODE_RADIUS,
+      y: skill.y + this.NODE_TOP_OFFSET + this.NODE_RADIUS,
+    };
+  }
+
+  edgeCoords(parent: Skill, child: Skill) {
+    const p = this.nodeCenter(parent);
+    const c = this.nodeCenter(child);
+    const dx = c.x - p.x;
+    const dy = c.y - p.y;
+    const len = Math.hypot(dx, dy) || 1;
+    const ox = dx / len;
+    const oy = dy / len;
+
+    return {
+      x1: p.x + ox * this.NODE_RADIUS,
+      y1: p.y + oy * this.NODE_RADIUS,
+      x2: c.x - ox * this.NODE_RADIUS,
+      y2: c.y - oy * this.NODE_RADIUS,
+    };
+  }
+
+
+  zoom = signal(1);
+  offsetX = signal(0);
   offsetY = signal(0);
 
   private MIN_ZOOM = 0.5;
@@ -63,7 +92,7 @@ export class SkillTreeCanvas {
   }
 
   onMouseDown(event: MouseEvent) {
-    if (event.button !== 1) return; // только средняя кнопка
+    if (event.button !== 1) return;
     event.preventDefault();
 
     this.isPanning = true;

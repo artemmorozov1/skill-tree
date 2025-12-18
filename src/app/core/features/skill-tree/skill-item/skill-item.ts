@@ -17,6 +17,7 @@ export class SkillItem {
   });
 
   clickHandler() {
+    if (this.locked()) return;
     this.pressed.emit(this.skill()?.id!);
   }
 }

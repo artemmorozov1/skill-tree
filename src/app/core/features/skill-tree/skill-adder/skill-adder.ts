@@ -17,7 +17,7 @@ export class SkillAdder {
 
   isOpen = signal(false);
 
-  readonly parentId = input<number>();
+  readonly parentId = input<number | null>();
   readonly slot = input<Slot>();
   readonly closed = output<void>();
 
@@ -40,7 +40,9 @@ export class SkillAdder {
     const name = this.name.value?.trim();
     const slot = this.slot();
     const parentId = this.parentId();
-    if (!name || !slot || parentId == null) return;
+
+    if (!name || !slot) return;
+    if (parentId === undefined) return;
 
     this.skillsService.addSkill(parentId, slot, {
       name,

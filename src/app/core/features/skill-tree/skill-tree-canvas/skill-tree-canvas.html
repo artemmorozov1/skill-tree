@@ -11,14 +11,23 @@
          'scale(' + zoom() + ')'
        ">
 
-      <svg class="absolute inset-0 pointer-events-none">
+      <svg class="absolute pointer-events-none"
+      [style.left.px]="-2000"
+      [style.top.px]="-2000"
+      width="4000"
+      height="4000"
+      viewBox="-2000 -2000 4000 4000"
+      >
         @for (skill of skills(); track skill.id) {
           @if (skill.parentId !== null) {
             @let parent = getParent(skill.parentId);
             <line
-            [attr.x1]="parent?.x" [attr.y1]="parent?.y"
-            [attr.x2]="skill.x" [attr.y2]="skill.y"
-            stroke="#555" stroke-width="2"
+            [attr.x1]="edgeCoords(parent!, skill).x1"
+            [attr.y1]="edgeCoords(parent!, skill).y1"
+            [attr.x2]="edgeCoords(parent!, skill).x2"
+            [attr.y2]="edgeCoords(parent!, skill).y2"
+            stroke="#555"
+            stroke-width="2"
             />
           }
         }
@@ -26,11 +35,9 @@
 
       @for (slot of slots(); track slot.index + ':' + slot.parentId) {
         <button class="absolute w-6 h-6 rounded-full bg-neutral-700 text-sm text-neutral-300 flex justify-center"
-        [style.left.px]="slot.x - 12"
-        [style.top.px]="slot.y - 12"
-        (click)="openSlot(slot)"
-        >+
-        </button>
+        [style.left.px]="slot.x"
+        [style.top.px]="slot.y"
+        (click)="openSlot(slot)">+</button>
       }
 
       @if (selectedSlot) {
