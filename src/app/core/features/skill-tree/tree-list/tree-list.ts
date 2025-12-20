@@ -6,10 +6,10 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-tree-adder',
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './tree-adder.html',
-  styleUrl: './tree-adder.css',
+  templateUrl: './tree-list.html',
+  styleUrl: './tree-list.css',
 })
-export class TreeAdder {
+export class TreeList {
 
   readonly skillsService = inject(SkillsService);
   readonly trees = this.skillsService.getTrees();
@@ -20,6 +20,7 @@ export class TreeAdder {
 
   @ViewChild('nameInput')
   private nameInput?: ElementRef<HTMLInputElement>;
+  
 
   constructor() {
     effect((onCleanup) => {

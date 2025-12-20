@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TreeAdder } from './tree-adder';
+import { TreeList } from './tree-list';
 
-describe('TreeAdder', () => {
-  let component: TreeAdder;
-  let fixture: ComponentFixture<TreeAdder>;
+describe('TreeList', () => {
+  let component: TreeList;
+  let fixture: ComponentFixture<TreeList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TreeAdder]
+      imports: [TreeList]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TreeAdder);
+    fixture = TestBed.createComponent(TreeList);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

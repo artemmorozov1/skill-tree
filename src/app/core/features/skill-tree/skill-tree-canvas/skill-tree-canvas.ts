@@ -3,17 +3,16 @@ import { SkillsService } from '../../../models/services/skills.service';
 import { SkillItem } from '../skill-item/skill-item';
 import { Skill, Slot } from '../../../models/interfaces/Models';
 import { SkillAdder } from '../skill-adder/skill-adder';
-import { TreeAdder } from '../tree-adder/tree-adder';
+import { TreeList } from '../tree-list/tree-list';
 
 @Component({
   selector: 'app-skill-tree-canvas',
   standalone: true,
   templateUrl: './skill-tree-canvas.html',
   styleUrl: './skill-tree-canvas.css',
-  imports: [SkillItem, SkillAdder, TreeAdder],
+  imports: [SkillItem, SkillAdder, TreeList],
 })
 export class SkillTreeCanvas {
-  
   // Skills logic
   skillsService = inject(SkillsService);
   skills = this.skillsService.getSkills();

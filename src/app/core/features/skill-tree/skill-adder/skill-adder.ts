@@ -1,8 +1,7 @@
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, output, signal, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { SkillsService } from '../../../models/services/skills.service';
 import { SkillIcon, Slot } from '../../../models/interfaces/Models';
-
 
 @Component({
   selector: 'app-skill-adder',
@@ -17,14 +16,29 @@ export class SkillAdder {
   description: string = ''; 
 
   isOptionsOpen = signal(false);
+  iconOptions: SkillIcon[] = ['code', 'chess', 'psychology', 'exercise']; 
+  selected = signal(this.iconOptions[0]);
 
   readonly parentId = input<number | null>();
   readonly slot = input<Slot>();
   readonly closed = output<void>();
+  readonly opened = output<void>();
 
-  iconOptions: SkillIcon[] = ['code', 'chess', 'psychology', 'exercise']; 
+  @ViewChild('nameInput')
+  private nameInput?: ElementRef<HTMLInputElement>;
 
-  selected = signal(this.iconOptions[0]);
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    this.closed.emit();
+  }
+
+  ngOnInit() {
+    this.opened.emit();
+  }
+  
+  ngAfterViewInit() {
+    this.focusInput();
+  }
 
   handleToggle() {
     this.isOptionsOpen.update(v => !v);
@@ -33,6 +47,11 @@ export class SkillAdder {
   handleChoose(opt: SkillIcon) {
     this.selected.set(opt);
     this.isOptionsOpen.set(false);
+    this.focusInput();
+  }
+
+  focusInput() {
+    this.nameInput?.nativeElement.focus();
   }
 
   handleAdd() {
