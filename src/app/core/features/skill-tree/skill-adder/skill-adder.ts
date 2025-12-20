@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { SkillsService } from '../../../models/services/skills.service';
 import { SkillIcon, Slot } from '../../../models/interfaces/Models';
 
+
 @Component({
   selector: 'app-skill-adder',
   imports: [ReactiveFormsModule],
@@ -15,7 +16,7 @@ export class SkillAdder {
   name = new FormControl('');
   description: string = ''; 
 
-  isOpen = signal(false);
+  isOptionsOpen = signal(false);
 
   readonly parentId = input<number | null>();
   readonly slot = input<Slot>();
@@ -26,12 +27,12 @@ export class SkillAdder {
   selected = signal(this.iconOptions[0]);
 
   handleToggle() {
-    this.isOpen.update(v => !v);
+    this.isOptionsOpen.update(v => !v);
   }
 
   handleChoose(opt: SkillIcon) {
     this.selected.set(opt);
-    this.isOpen.set(false);
+    this.isOptionsOpen.set(false);
   }
 
   handleAdd() {

@@ -1,34 +1,55 @@
-<div class="flex space-x-2">
+
+<div class="flex flex-wrap space-x-2 space-y-2">
     @for (tree of trees(); track tree.id) {
         <button
-        class=" hover:bg-zinc-700 text-white text-sm font-medium py-2 px-6 rounded-2xl"
+        class=" hover:bg-zinc-700 text-white text-sm font-medium px-6 h-9 rounded-2xl"
         [ngClass]="selectedTreeId() === tree.id ? 'bg-zinc-700' : 'bg-zinc-800'"
         (click)="handleSelect(tree.id)"
         >
         {{ tree.name }}
         </button>
     }
-</div>
-
-<div class="flex content-start items-center mt-4 space-x-2">
-    <input type="text" placeholder="Tree name" [formControl]="name"
-        class="
-        h-10
-        border
-        border-neutral-700
-        rounded-xl
-        w-64
-        px-3
-        py-2
-        bg-transparent
-        text-neutral-200
-        placeholder-neutral-500
-        outline-none
-        focus:border-neutral-400
-        transition-colors
-        ">
-
-    <button (click)="handleAdd()" class=" hover:bg-zinc-800 border border-neutral-700 text-white text-sm font-medium h-10 px-5 rounded-xl">
+    
+    <button (click)="openInputField()"
+    class=" hover:bg-zinc-800 border border-neutral-700
+    text-white text-sm font-medium
+    h-9 px-5 rounded-2xl">
             Add
     </button>
 </div>
+
+@if (isOpen()) {
+    <div class="fixed inset-0 bg-black/50 z-40 pointer-events-none"></div>
+    <div class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="flex items-center space-x-2">
+            <input type="text"
+            #nameInput
+            placeholder="Tree name"
+            [formControl]="name"
+            (keydown.enter)="addTree()"
+                class="
+                h-10
+                border
+                border-neutral-700
+                rounded-xl
+                w-64
+                px-3
+                py-2
+                bg-neutral-900
+                text-neutral-200
+                placeholder-neutral-500
+                outline-none
+                focus:border-neutral-400
+                transition-colors">
+            <button (click)="addTree()"
+                class=" 
+                 border border-neutral-700
+                 hover:bg-zinc-800
+                text-white text-sm font-medium
+                h-10 px-5 rounded-2xl">
+                Save
+            </button>
+        </div>
+    </div>
+}
+

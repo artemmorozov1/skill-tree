@@ -1,6 +1,9 @@
 <div class="w-full flex justify-center pb-16">
     <div class="flex items-center gap-3">
-      <input type="text" placeholder="Skill name" [formControl]="name"
+      <input type="text" placeholder="Skill name"
+      autofocus
+      [formControl]="name"
+      (keydown.enter)="handleAdd()"
       class="
         h-10
         border
@@ -9,7 +12,7 @@
         w-64
         px-3
         py-2
-        bg-transparent
+        bg-neutral-900
         text-neutral-200
         placeholder-neutral-500
         outline-none
@@ -24,7 +27,8 @@
         flex justify-between
         h-10 w-full
         border border-neutral-700 rounded-xl
-        bg-transparent
+        bg-neutral-900
+        hover:bg-neutral-800
         px-3 py-2
         hover:border-neutral-500
         text-sm text-neutral-200
@@ -36,7 +40,7 @@
           </span>
         </button>
 
-        @if (isOpen()) {
+        @if (isOptionsOpen()) {
           <div class="
            absolute left-0 bottom-full mb-2 w-full
            bg-transparent border border-neutral-700 rounded-xl
@@ -47,6 +51,7 @@
             <button
             (click)="handleChoose(opt)"
             class="w-full text-left px-3 py-2 text-sm
+            bg-neutral-900
             hover:bg-neutral-800
             text-neutral-200
             capitalize
@@ -68,7 +73,7 @@
           border-neutral-700
           rounded-xl
           w-16
-          hover:border-neutral-500
+          hover:bg-neutral-800
           text-sm text-neutral-200
       ">
           Add
