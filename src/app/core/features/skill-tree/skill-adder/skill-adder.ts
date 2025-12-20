@@ -13,9 +13,9 @@ export class SkillAdder {
   skillsService = inject(SkillsService);
 
   name = new FormControl('');
-  description: string = ''; 
+  description: string = '';
 
-  isOptionsOpen = signal(false);
+  isOptionsOpen = signal(false);  
   iconOptions: SkillIcon[] = ['code', 'chess', 'psychology', 'exercise']; 
   selected = signal(this.iconOptions[0]);
 

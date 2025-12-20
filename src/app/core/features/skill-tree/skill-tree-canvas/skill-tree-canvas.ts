@@ -14,21 +14,22 @@ import { TreeList } from '../tree-list/tree-list';
 })
 export class SkillTreeCanvas {
   // Skills logic
-  skillsService = inject(SkillsService);
-  skills = this.skillsService.getSkills();
-  slots = this.skillsService.getVisibleSlots();
-
-  selectedSlot: Slot | null = null;
-
-  openSlot(slot: Slot) {
-    this.selectedSlot = slot;
-  }
+  
+  readonly skillsService = inject(SkillsService);
+  readonly skills = this.skillsService.getSkills();
+  readonly slots = this.skillsService.getVisibleSlots();
 
   skillById = computed(() => {
     const map = new Map<number, Skill>();
     this.skills().forEach(s => map.set(s.id, s));
     return map;
   });
+
+  selectedSlot: Slot | null = null;
+
+  openSlot(slot: Slot) {
+    this.selectedSlot = slot;
+  }
 
   getParent(id: number) {
     if (id === null) return undefined;
@@ -39,6 +40,7 @@ export class SkillTreeCanvas {
     this.skillsService.upgradeSkill(id);
   }
 
+  // Edge drawing logic
   private readonly NODE_SIZE = 64;       // w-16/h-16
   private readonly NODE_TOP_OFFSET = 20; // mt-5
   private readonly NODE_RADIUS = this.NODE_SIZE / 2;
@@ -68,6 +70,7 @@ export class SkillTreeCanvas {
   }
 
 
+  // Canvas pan & zoom logic
   zoom = signal(1);
   offsetX = signal(0);
   offsetY = signal(0);
