@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, HostListener, inject, output, signal, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, HostListener, inject, input, output, signal, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SkillsService } from '../../../models/services/skills.service';
 
@@ -9,38 +9,39 @@ import { SkillsService } from '../../../models/services/skills.service';
   styleUrl: './tree-input.css',
 })
 export class TreeInput {
-  readonly skillsService = inject(SkillsService);
-  name = new FormControl('');
+  mode = input<'add' | 'rename'>('add');
+  initialName = input<string>('');
+
+  closed = output<void>();
+  saved = output<string>();
+
+  treeName = new FormControl('');
 
   @ViewChild('nameInput')
   private nameInput?: ElementRef<HTMLInputElement>;
 
-  closed = output<void>();
-  opened = output<void>();
-
-  @HostListener('document:keydown.escape')
-  onEscape() {
-    this.closeInputField();
-  }
-
   ngOnInit() {
-    this.opened.emit();
+    this.treeName.setValue(this.initialName());
   }
 
   ngAfterViewInit() {
     queueMicrotask(() => this.nameInput?.nativeElement.focus());
   }
 
-  closeInputField() {
-    this.closed.emit();
-    this.name.reset();
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    this.closeInputField();
   }
 
-  addTree() {
-    const trimmedName = this.name.value?.trim();
-    if (trimmedName) {
-      this.skillsService.createTree(trimmedName);
-      this.closeInputField();
-    }
+  saveResult() {
+    const trimmedName = this.treeName.value?.trim();
+    if (!trimmedName) return;
+    this.saved.emit(trimmedName);
+    this.closeInputField();
+  }
+
+  closeInputField() {
+    this.closed.emit();
+    this.treeName.reset();
   }
 }

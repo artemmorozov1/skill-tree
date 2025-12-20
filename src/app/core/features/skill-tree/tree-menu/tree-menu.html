@@ -1,0 +1,30 @@
+<div 
+class="fixed z-50"
+[style.left.px]="pos()?.x ?? 0"
+[style.top.px]="pos()?.y ?? 0"
+(click)="$event.stopPropagation()"
+(contextmenu)="$event.preventDefault()"
+>
+    <div 
+    class="bg-zinc-800 text-white rounded-md shadow-lg py-2 w-40"
+    >
+        <button 
+        class="w-full text-left px-4 py-2 hover:bg-zinc-700"
+        (click)="deleteTree()"
+        >
+            Delete Tree
+        </button>
+        <button 
+        class="w-full text-left px-4 py-2 hover:bg-zinc-700"
+        (click)="renameTree()"
+        >
+            Rename Tree
+        </button>
+        <button 
+        class="w-full text-left px-4 py-2 hover:bg-zinc-700"
+        (click)="closeMenu()"
+        >
+            Close Menu
+        </button>
+    </div>
+</div>

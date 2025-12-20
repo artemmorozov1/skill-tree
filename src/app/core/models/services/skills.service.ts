@@ -32,6 +32,10 @@ export class SkillsService {
      return this.trees.asReadonly();
   }
 
+  getTreeById(id: number) {
+    return this.trees().find((t) => t.id === id) ?? null;
+  }
+
   getActiveTreeId() {
     return this.activeTreeId.asReadonly();
   }

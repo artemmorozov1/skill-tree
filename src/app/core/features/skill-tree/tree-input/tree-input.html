@@ -4,8 +4,8 @@
             <input type="text"
             #nameInput
             placeholder="Tree name"
-            [formControl]="name"
-            (keydown.enter)="addTree()"
+            [formControl]="treeName"
+            (keydown.enter)="saveResult()"
                 class="
                 h-10
                 border
@@ -20,7 +20,8 @@
                 outline-none
                 focus:border-neutral-400
                 transition-colors">
-            <button (click)="addTree()"
+                
+            <button (click)="saveResult()"
                 class=" 
                  border border-neutral-700
                  hover:bg-zinc-800
