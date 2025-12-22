@@ -1,5 +1,7 @@
 import { Component, input, output } from '@angular/core';
 
+type MenuTargetType = 'skill' | 'tree';
+
 @Component({
   selector: 'app-tree-menu',
   imports: [],
@@ -7,7 +9,8 @@ import { Component, input, output } from '@angular/core';
   styleUrl: './tree-menu.css',
 })
 export class TreeMenu {
- treeId = input<number | null>(null);
+ itemId = input<number | null>(null);
+ itemType = input<MenuTargetType>();
  pos = input<{ x: number; y: number } | null>(null);
 
  closed = output<void>();
@@ -18,11 +21,11 @@ export class TreeMenu {
     this.closed.emit();
  }
 
- deleteTree() {
-    this.deleted.emit(this.treeId() ?? 0);
+ deleteItem() {
+    this.deleted.emit(this.itemId() ?? 0);
  }
 
- renameTree() {
-  this.renamed.emit(this.treeId() ?? 0);
+ renameItem() {
+  this.renamed.emit(this.itemId() ?? 0);
  }
 }

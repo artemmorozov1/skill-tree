@@ -5,9 +5,9 @@
      (mouseleave)="onMouseUp()"
      (mousemove)="onMouseMove($event)">
 
-  <app-tree-adder
-    class="absolute top-4 left-4 z-10">
-  </app-tree-adder>
+  <app-tree-list
+    class="absolute top-4 left-4 z-50"
+  ></app-tree-list>
 
   <div class="absolute left-1/2 top-1/2 world "
        [style.transform]="
@@ -63,7 +63,19 @@
         class="absolute"
         [style.left.px]="skill.x"
         [style.top.px]="skill.y"
-        (pressed)="onSkillPressed($event)"></app-skill-item>
+        (pressed)="onSkillPressed($event)"
+        (menuCalled)="openMenu($event)"
+        ></app-skill-item>
       }
+
+      @if (menuOpen()) {
+        <app-tree-menu class="fixed"
+        [itemId]="menuItemId()"
+        [pos]="menuPos()"
+        (renamed)="handleRename($event)"
+        (deleted)="handleDelete($event)"
+        (closed)="closeMenu()"
+        ></app-tree-menu>
+        }
   </div>
 </div>

@@ -6,22 +6,27 @@ class="fixed z-50"
 (contextmenu)="$event.preventDefault()"
 >
     <div 
-    class="bg-zinc-800 text-white rounded-md shadow-lg py-2 w-40"
+    class="bg-zinc-800 text-white shadow-lg rounded-md py-2 w-40 text-sm"
     >
         <button 
-        class="w-full text-left px-4 py-2 hover:bg-zinc-700"
-        (click)="deleteTree()"
+        class="w-full text-left px-4 py-2 
+        hover:bg-red-800 hover:text-neutral-300
+        text-red-500"
+        (click)="deleteItem()"
         >
-            Delete Tree
+            Delete
         </button>
         <button 
-        class="w-full text-left px-4 py-2 hover:bg-zinc-700"
-        (click)="renameTree()"
+        class="w-full text-left px-4 py-2 
+        hover:bg-emerald-800 hover:text-neutral-300
+        text-emerald-500"
+        (click)="renameItem()"
         >
-            Rename Tree
+            Rename
         </button>
         <button 
-        class="w-full text-left px-4 py-2 hover:bg-zinc-700"
+        class="w-full text-left px-4 py-2 
+        hover:bg-slate-800"
         (click)="closeMenu()"
         >
             Close Menu

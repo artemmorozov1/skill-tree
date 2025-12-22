@@ -148,6 +148,27 @@ export class SkillsService {
     }
   }
 
+  deleteSkill(id: number) {
+    this.updateActiveTree((t) => {
+      const skill = this.skills().find((s) => s.id === id);
+      if (!skill) return t;
+      if (skill.childrenIds.length > 0) return t;
+      
+      const skills = t.skills.filter((s) => s.id !== id);
+
+      if (skill.parentId !== null) {
+        const parent = skills.find(s => s.id === skill.parentId);
+        if (parent) {
+          parent.childrenIds = parent.childrenIds.filter(cid => cid !== id);
+        }
+      }
+
+      return { ...t, skills };
+    });
+    
+    
+  }
+
   addSkill(
     parentId: number | null, slot: { x: number, y : number },
     payload: { name: string, description: string, icon: SkillIcon }
@@ -203,6 +224,24 @@ export class SkillsService {
         ),
       };
     });
+  }
+
+  downgradeSkill(id: number) {
+    this.updateActiveTree((t) => {
+      const skill = t.skills.find((s) => s.id === id);
+      if (!skill || skill.level === 0) return t;
+
+      const children = t.skills.filter((s) => skill.childrenIds.includes(s.id));
+
+      if (children.some((c) => c.level > 0)) return t;
+
+      return {
+        ...t,
+        skills: t.skills.map((s) => 
+          s.id === id ? { ...s, level: s.level - 1 } : s
+        ),
+      }
+    })
   }
 
   isLocked(id: number) : boolean {

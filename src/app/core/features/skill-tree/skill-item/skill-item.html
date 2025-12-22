@@ -1,6 +1,8 @@
 <div
  class="flex flex-col items-center mt-5 select-none group relative"
- (click)="clickHandler()"
+ (click)="changeSkillLevel($event)"
+ (auxclick)="changeSkillLevel($event)"
+ (contextmenu)="openMenu($event)"
  [class.opacity-60]="locked()"
  [class.saturate-0]="locked()"
  [class.cursor-not-allowed]="locked()"
@@ -8,7 +10,7 @@
   <!-- Skill -->
   <div class="w-16 h-16 bg-gray-800 rounded-full border-2 border-gray-600 flex items-center justify-center cursor-pointer
               transition hover:scale-110 hover:border-neutral-400 shadow-md"
-              [class.border-neutral-400]="upgraded()"
+              [class.border-neutral-400]="maxLevel()"
               [class.hover\:scale-100]="locked()"
               [class.hover\:border-neutral-400]="!locked()"
               >

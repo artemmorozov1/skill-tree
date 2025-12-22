@@ -6,7 +6,7 @@ import { TreeInput } from '../tree-input/tree-input';
 import { TreeMenu } from '../tree-menu/tree-menu';
 
 @Component({
-  selector: 'app-tree-adder',
+  selector: 'app-tree-list',
   imports: [ReactiveFormsModule, CommonModule, TreeInput, TreeMenu],
   templateUrl: './tree-list.html',
   styleUrl: './tree-list.css',

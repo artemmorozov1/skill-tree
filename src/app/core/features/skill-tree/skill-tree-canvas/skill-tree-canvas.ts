@@ -1,23 +1,29 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { SkillsService } from '../../../models/services/skills.service';
 import { SkillItem } from '../skill-item/skill-item';
 import { Skill, Slot } from '../../../models/interfaces/Models';
 import { SkillAdder } from '../skill-adder/skill-adder';
 import { TreeList } from '../tree-list/tree-list';
+import { SkillActionEvent } from '../../../models/interfaces/skill-action-types';
+import { TreeMenu } from '../tree-menu/tree-menu';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-skill-tree-canvas',
   standalone: true,
   templateUrl: './skill-tree-canvas.html',
   styleUrl: './skill-tree-canvas.css',
-  imports: [SkillItem, SkillAdder, TreeList],
+  imports: [SkillItem, SkillAdder, TreeList, TreeMenu],
 })
 export class SkillTreeCanvas {
   // Skills logic
-  
   readonly skillsService = inject(SkillsService);
   readonly skills = this.skillsService.getSkills();
   readonly slots = this.skillsService.getVisibleSlots();
+
+  menuOpen = signal(false);
+  menuItemId = signal<number | null>(null);
+  menuPos = signal<{ x: number; y: number } | null>(null);
 
   skillById = computed(() => {
     const map = new Map<number, Skill>();
@@ -26,6 +32,40 @@ export class SkillTreeCanvas {
   });
 
   selectedSlot: Slot | null = null;
+
+  constructor() {
+    effect(() => {
+      const tree = this.skillsService.getActiveTreeId();
+      if (tree()) this.selectedSlot = null;
+    });
+  }
+
+  openMenu(e: {x: number, y: number, id: number}) {
+    const offsetX = 35;
+    const offsetY = 50;
+    
+    const posX = e.x + offsetX;
+    const posY = e.y + offsetY;
+
+    this.menuItemId.set(e.id);
+    this.menuPos.set({x: posX, y: posY});
+    this.menuOpen.set(true);
+  }
+
+  handleDelete(id: number) {
+    this.skillsService.deleteSkill(id);
+    this.menuPos.set(null);
+    this.menuItemId.set(null);
+    this.closeMenu();
+  }
+
+  handleRename(id: number) {
+
+  }
+
+  closeMenu() {
+    this.menuOpen.set(false);
+  }
 
   openSlot(slot: Slot) {
     this.selectedSlot = slot;
@@ -36,9 +76,14 @@ export class SkillTreeCanvas {
     return this.skillById().get(id);
   }
   
-  onSkillPressed(id: number) {
-    this.skillsService.upgradeSkill(id);
+  onSkillPressed(e: SkillActionEvent) {
+    if (e.type === 'upgrade') {
+      this.skillsService.upgradeSkill(e.skillId);
+    } else if (e.type === 'downgrade') {
+      this.skillsService.downgradeSkill(e.skillId);
+    }
   }
+
 
   // Edge drawing logic
   private readonly NODE_SIZE = 64;       // w-16/h-16
@@ -118,10 +163,6 @@ export class SkillTreeCanvas {
 
     this.offsetX.update(x => x + dx);
     this.offsetY.update(y => y + dy);
-  }
-
-  onTreeAdded(name: string) {
-    this.selectedSlot = null;
   }
 }
 

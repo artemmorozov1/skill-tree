@@ -1,7 +1,5 @@
-import { Component, effect, ElementRef, HostListener, inject, input, output, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, input, output, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { SkillsService } from '../../../models/services/skills.service';
-
 @Component({
   selector: 'app-tree-input',
   imports: [ReactiveFormsModule],
