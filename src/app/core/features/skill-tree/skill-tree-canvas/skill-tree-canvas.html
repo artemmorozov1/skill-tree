@@ -65,6 +65,7 @@
         [style.top.px]="skill.y"
         (pressed)="onSkillPressed($event)"
         (menuCalled)="openMenu($event)"
+        [menuActive]="menuOpen()"
         ></app-skill-item>
       }
 

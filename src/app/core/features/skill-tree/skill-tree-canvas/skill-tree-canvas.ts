@@ -60,10 +60,12 @@ export class SkillTreeCanvas {
   }
 
   handleRename(id: number) {
-
+    
   }
 
   closeMenu() {
+    this.menuItemId.set(null);
+    this.menuPos.set(null);
     this.menuOpen.set(false);
   }
 

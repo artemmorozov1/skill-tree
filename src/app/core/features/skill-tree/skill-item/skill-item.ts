@@ -11,6 +11,8 @@ import { SkillActionEvent } from '../../../models/interfaces/skill-action-types'
 export class SkillItem {
   skill = input<Skill>();
   locked = input<boolean>();
+  menuActive = input<boolean>();
+
   pressed = output<SkillActionEvent>();
   menuCalled = output<{ x: number; y: number; id: number }>();
   
