@@ -5,15 +5,14 @@ import { Skill, Slot } from '../../../models/interfaces/Models';
 import { SkillAdder } from '../skill-adder/skill-adder';
 import { TreeList } from '../tree-list/tree-list';
 import { SkillActionEvent } from '../../../models/interfaces/skill-action-types';
-import { TreeMenu } from '../tree-menu/tree-menu';
-import { of } from 'rxjs';
+import { ItemMenu } from '../item-menu/item-menu';
 
 @Component({
   selector: 'app-skill-tree-canvas',
   standalone: true,
   templateUrl: './skill-tree-canvas.html',
   styleUrl: './skill-tree-canvas.css',
-  imports: [SkillItem, SkillAdder, TreeList, TreeMenu],
+  imports: [SkillItem, SkillAdder, TreeList, ItemMenu],
 })
 export class SkillTreeCanvas {
   // Skills logic
@@ -57,6 +56,7 @@ export class SkillTreeCanvas {
     this.menuPos.set(null);
     this.menuItemId.set(null);
     this.closeMenu();
+    this.selectedSlot = null;
   }
 
   handleRename(id: number) {
@@ -71,6 +71,7 @@ export class SkillTreeCanvas {
 
   openSlot(slot: Slot) {
     this.selectedSlot = slot;
+    this.closeMenu();
   }
 
   getParent(id: number) {

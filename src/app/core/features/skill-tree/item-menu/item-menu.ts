@@ -3,12 +3,12 @@ import { Component, input, output } from '@angular/core';
 type MenuTargetType = 'skill' | 'tree';
 
 @Component({
-  selector: 'app-tree-menu',
+  selector: 'app-item-menu',
   imports: [],
-  templateUrl: './tree-menu.html',
-  styleUrl: './tree-menu.css',
+  templateUrl: './item-menu.html',
+  styleUrl: './item-menu.css',
 })
-export class TreeMenu {
+export class ItemMenu {
  itemId = input<number | null>(null);
  itemType = input<MenuTargetType>();
  pos = input<{ x: number; y: number } | null>(null);

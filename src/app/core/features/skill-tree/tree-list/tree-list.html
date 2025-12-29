@@ -12,13 +12,14 @@
     }
 
     @if (menuOpen()) {
-        <app-tree-menu class="fixed"
+        <app-item-menu class="fixed"
         [itemId]="menuTreeId()"
+        [itemType]="'tree'"
         [pos]="menuPos()"
         (closed)="closeMenu()"
         (deleted)="handleDeleteTree($event)"
         (renamed)="openRenameInput($event)"
-        ></app-tree-menu>
+        ></app-item-menu>
     }   
     
     <button (click)="openAddInput()"

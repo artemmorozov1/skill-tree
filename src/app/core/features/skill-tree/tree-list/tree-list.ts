@@ -3,11 +3,11 @@ import { SkillsService } from '../../../models/services/skills.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TreeInput } from '../tree-input/tree-input';
-import { TreeMenu } from '../tree-menu/tree-menu';
+import { ItemMenu } from '../item-menu/item-menu';
 
 @Component({
   selector: 'app-tree-list',
-  imports: [ReactiveFormsModule, CommonModule, TreeInput, TreeMenu],
+  imports: [ReactiveFormsModule, CommonModule, TreeInput, ItemMenu],
   templateUrl: './tree-list.html',
   styleUrl: './tree-list.css',
 })

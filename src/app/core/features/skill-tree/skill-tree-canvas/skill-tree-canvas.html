@@ -70,13 +70,14 @@
       }
 
       @if (menuOpen()) {
-        <app-tree-menu class="fixed"
+        <app-item-menu class="fixed"
         [itemId]="menuItemId()"
+        [itemType]="'skill'"
         [pos]="menuPos()"
         (renamed)="handleRename($event)"
         (deleted)="handleDelete($event)"
         (closed)="closeMenu()"
-        ></app-tree-menu>
+        ></app-item-menu>
         }
   </div>
 </div>
