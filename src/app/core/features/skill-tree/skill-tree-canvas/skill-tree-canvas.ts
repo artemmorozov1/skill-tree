@@ -15,7 +15,6 @@ import { ItemMenu } from '../item-menu/item-menu';
   imports: [SkillItem, SkillAdder, TreeList, ItemMenu],
 })
 export class SkillTreeCanvas {
-  // Skills logic
   readonly skillsService = inject(SkillsService);
   readonly skills = this.skillsService.getSkills();
   readonly slots = this.skillsService.getVisibleSlots();
@@ -87,8 +86,6 @@ export class SkillTreeCanvas {
     }
   }
 
-
-  // Edge drawing logic
   private readonly NODE_SIZE = 64;       // w-16/h-16
   private readonly NODE_TOP_OFFSET = 20; // mt-5
   private readonly NODE_RADIUS = this.NODE_SIZE / 2;
@@ -116,7 +113,6 @@ export class SkillTreeCanvas {
       y2: c.y - oy * this.NODE_RADIUS,
     };
   }
-
 
   // Canvas pan & zoom logic
   zoom = signal(1);
