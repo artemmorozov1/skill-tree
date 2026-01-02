@@ -20,78 +20,27 @@
         transition-colors
       ">
 
-      <div class="relative inline-block text-sm select-none w-40">
-        <button
-        (click)="handleToggle()"
-        class="
-        flex gap-3 w-full
-        h-10 
-        border border-neutral-700 rounded-xl
-        bg-neutral-900
-        hover:bg-neutral-800
-        px-3 py-2
-        hover:border-neutral-500
-        text-sm text-neutral-200
-        ">
-          <span class="material-symbols-outlined flex-none w-6">{{ selected() }}</span>
-          <span class="capitalize font-medium truncate min-w-0"> {{selected()}} </span>
-          
-          <span class="material-symbols-outlined text-neutral-500 text-base flex-none ml-auto">
-            expand_more
-          </span>
-        </button>
+      <app-dropdown
+      [items]="numbers"
+      [selected]="numberSelected()"
+      [width]="20"
+      (valueChange)="selectNumber($event)"
+      >
+        <ng-template let-sel>
+           <span class="capitalize font-medium truncate min-w-0"> {{ sel }} </span>
+        </ng-template>
+      </app-dropdown>
 
-        @if (isOptionsOpen()) {
-          <div class="
-           absolute left-0 bottom-full mb-2 w-full
-           bg-transparent border border-neutral-700 rounded-xl
-           z-20 overflow-hidden
-          "> 
-          
-          <!-- 
-          @for (opt of iconOptions; track opt) {
-            <button
-            (click)="handleChoose(opt)"
-            class="w-full text-left px-3 py-2 text-sm
-            bg-neutral-900
-            hover:bg-neutral-800
-            text-neutral-200
-            capitalize
-            ">
-              {{opt}}
-            </button>
-          } -->
-
-          @for (opt of iconOptions; track opt) {
-            <div
-            (click)="handleChoose(opt)"
-            class="
-              bg-neutral-900 hover:bg-neutral-800
-              w-full px-3 py-2 
-              text-sm
-              flex gap-3 items-center
-            ">
-              <span
-                class="material-symbols-outlined
-                text-neutral-200"
-                >
-                  {{ opt }}
-              </span>
-
-              <span
-              class="font-medium capitalize"
-              >
-                {{ opt }}
-              </span>
-            </div>
-
-          }
-
-          </div>
-        }
-      </div>
-
-
+      <app-dropdown
+      [items]="iconOptions"
+      [selected]="iconSelected()"
+      (valueChange)="selectSkill($event)"
+      >
+        <ng-template let-sel>
+          <span class="material-symbols-outlined flex-none w-6">{{ sel }}</span>
+          <span class="capitalize font-medium truncate min-w-0"> {{ sel }} </span>
+        </ng-template>
+      </app-dropdown>
 
       <button type="submit" (click)="handleAdd()"
         class="

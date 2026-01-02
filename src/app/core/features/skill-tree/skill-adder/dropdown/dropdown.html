@@ -1,0 +1,55 @@
+<div class="relative inline-block text-sm select-none" [ngClass]="widthClass()">
+        <button
+        (click)="toggle()"
+        class="
+        flex gap-3 w-full 
+        h-10 
+        border border-neutral-700 rounded-xl
+        bg-neutral-900
+        hover:bg-neutral-800
+        px-3 py-2
+        hover:border-neutral-500
+        text-sm text-neutral-200">
+            @if (itemTemplate) {
+                <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: selected()}"></ng-container>
+            } @else {
+                <span class="truncate"> {{ selected() }} </span>
+            }
+
+            @if (showIcon()) {
+                <span class="material-symbols-outlined text-neutral-500 text-base flex-none ml-auto">
+                    expand_more
+                </span>
+            }
+        </button>
+
+        @if (isOpen()) {
+          <div class="
+           absolute left-0 bottom-full mb-2 w-full
+           bg-transparent border border-neutral-700 rounded-xl
+           z-20 overflow-hidden
+          "> 
+
+          @for (opt of items(); track opt) {
+            <li
+            (click)="select(opt)"
+            class="
+              bg-neutral-900 hover:bg-neutral-800
+              w-full px-3 py-2 
+              text-sm
+              flex gap-3 items-center
+            ">
+              @if (itemTemplate) {
+                <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: opt}"></ng-container>
+              } @else {
+                <span class="font-medium capitalize">
+                    {{ opt }}
+                </span>
+              }
+            </li>
+
+          }
+
+          </div>
+        }
+</div>

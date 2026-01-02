@@ -2,10 +2,11 @@ import { Component, ElementRef, HostListener, inject, input, output, signal, Vie
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { SkillsService } from '../../../models/services/skills.service';
 import { SkillIcon, Slot } from '../../../models/interfaces/Models';
+import { Dropdown } from './dropdown/dropdown';
 
 @Component({
   selector: 'app-skill-adder',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Dropdown],
   templateUrl: './skill-adder.html',
   styleUrl: './skill-adder.css',
 })
@@ -15,9 +16,11 @@ export class SkillAdder {
   name = new FormControl('');
   description: string = '';
 
-  isOptionsOpen = signal(false);  
   iconOptions: SkillIcon[] = ['code', 'chess', 'psychology', 'exercise']; 
-  selected = signal(this.iconOptions[0]);
+  iconSelected = signal(this.iconOptions[0]);
+
+  numbers: number[] = [1, 2, 3];
+  numberSelected = signal(this.numbers[0]);
 
   readonly parentId = input<number | null>();
   readonly slot = input<Slot>();
@@ -40,13 +43,13 @@ export class SkillAdder {
     this.focusInput();
   }
 
-  handleToggle() {
-    this.isOptionsOpen.update(v => !v);
+  selectSkill(opt: SkillIcon) {
+    this.iconSelected.set(opt);
+    this.focusInput();
   }
 
-  handleChoose(opt: SkillIcon) {
-    this.selected.set(opt);
-    this.isOptionsOpen.set(false);
+  selectNumber(num: number) {
+    this.numberSelected.set(num);
     this.focusInput();
   }
 
@@ -65,7 +68,8 @@ export class SkillAdder {
     this.skillsService.addSkill(parentId, slot, {
       name,
       description: this.description,
-      icon: this.selected(),
+      icon: this.iconSelected(),
+      maxLevel: this.numberSelected(),
     });
 
     this.name.reset();

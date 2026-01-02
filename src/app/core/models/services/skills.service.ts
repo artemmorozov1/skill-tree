@@ -165,13 +165,11 @@ export class SkillsService {
 
       return { ...t, skills };
     });
-    
-    
   }
 
   addSkill(
     parentId: number | null, slot: { x: number, y : number },
-    payload: { name: string, description: string, icon: SkillIcon }
+    payload: { name: string, description: string, icon: SkillIcon, maxLevel?: number }
   ) {
     if (!payload.name) return;
     const tree = this.activeTree();
@@ -183,13 +181,15 @@ export class SkillsService {
       if (!parent) return;
     }
 
+    const maxLevel = payload.maxLevel ?? 3;
+
     const child: Skill = {
       id: this.genId(),
       name: payload.name,
       description: payload.description ?? '',
       icon: payload.icon,
       level: 0,
-      maxLevel: 3,
+      maxLevel: maxLevel,
       parentId,
       childrenIds: [], 
       x: slot.x,
