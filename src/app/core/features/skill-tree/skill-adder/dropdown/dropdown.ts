@@ -10,6 +10,7 @@ import { Component, ContentChild, input, output, signal, TemplateRef } from '@an
 export class Dropdown<T> {
   items = input<T[]>([]);
   selected = input<T>();
+  hoverText = input<string>();
 
   width = input<number>(40);
   showIcon = input<boolean>(true);

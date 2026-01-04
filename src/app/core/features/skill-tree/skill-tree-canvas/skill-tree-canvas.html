@@ -3,7 +3,9 @@
      (mousedown)="onMouseDown($event)"
      (mouseup)="onMouseUp()"
      (mouseleave)="onMouseUp()"
-     (mousemove)="onMouseMove($event)">
+     (mousemove)="onMouseMove($event)"
+     (click)="onBackgroundClick($event)"
+     >
 
   <app-tree-list
     class="absolute top-4 left-4 z-50"

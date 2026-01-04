@@ -1,4 +1,4 @@
-<div class="relative inline-block text-sm select-none" [ngClass]="widthClass()">
+<div class="relative inline-block text-sm select-none group" [ngClass]="widthClass()">
         <button
         (click)="toggle()"
         class="
@@ -22,6 +22,17 @@
                 </span>
             }
         </button>
+
+        <div class="
+        absolute left-1/2 -translate-x-1/2 py-1
+        opacity-0 group-hover:opacity-80
+        transition-opacity
+        text-sm font-medium whitespace-nowrap
+        text-neutral-300
+        
+        ">
+          {{ hoverText() }}
+        </div>
 
         @if (isOpen()) {
           <div class="
@@ -47,9 +58,7 @@
                 </span>
               }
             </li>
-
           }
-
           </div>
         }
 </div>

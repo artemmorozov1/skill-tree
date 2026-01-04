@@ -23,6 +23,7 @@
       <app-dropdown
       [items]="numbers"
       [selected]="numberSelected()"
+      [hoverText]="'max lvl'"
       [width]="20"
       (valueChange)="selectNumber($event)"
       >
@@ -34,6 +35,7 @@
       <app-dropdown
       [items]="iconOptions"
       [selected]="iconSelected()"
+      [hoverText]="'select icon'"
       (valueChange)="selectSkill($event)"
       >
         <ng-template let-sel>

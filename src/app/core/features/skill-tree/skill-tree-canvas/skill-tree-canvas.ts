@@ -73,6 +73,13 @@ export class SkillTreeCanvas {
     this.closeMenu();
   }
 
+  onBackgroundClick(event: MouseEvent) {
+    if (event.target === event.currentTarget) {
+      this.closeMenu();
+      this.selectedSlot = null;
+    }
+  }
+
   getParent(id: number) {
     if (id === null) return undefined;
     return this.skillById().get(id);
